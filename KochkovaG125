@@ -1,0 +1,75 @@
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Scanner;
+public class PhoneBookApp {
+    public static void main(String[] args) {
+     Dictionary<String, String> phoneBook = new Hashtable<>();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+          while (true) {
+            System.out.println("\nWelcome to the PhoneBook App!");
+            System.out.println("What would you like to do?");
+            System.out.println("1. Read the phone book");
+            System.out.println("2. Add new entry");
+            System.out.println("3. Update an entry");
+            System.out.println("4. Remove an entry");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();  
+        switch (choice) {
+                case 1:
+                    if (phoneBook.isEmpty()) {
+                        System.out.println("The phone book is empty.");
+                    } else {
+                        System.out.println("You have " + phoneBook.size() + " contacts:");
+                        Enumeration<String> keys = phoneBook.keys();
+                        while (keys.hasMoreElements()) {
+                            String name = keys.nextElement();
+                            System.out.println("Name = " + name + ", Phone = " + phoneBook.get(name));
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.print("Enter the name and phone number separated by space: ");
+                String[] newEntry = scanner.nextLine().split(" ");
+                    if (newEntry.length == 2) {
+                        phoneBook.put(newEntry[0], newEntry[1]);
+                        System.out.println("Contact added successfully!");
+                    } else {
+                        System.out.println("Invalid input. Please enter name and phone number separated by space.");
+                    }
+                    break;
+                case 3:
+                  System.out.print("Enter the name of the contact you'd like to update: ");
+                    String updateName = scanner.nextLine();
+                      if (phoneBook.get(updateName) != null) {
+                        System.out.print("Enter the new phone number: ");
+                        String newNumber = scanner.nextLine();
+                    phoneBook.put(updateName, newNumber);
+                        System.out.println("Contact updated successfully!");
+                      } else {
+                        System.out.println("Contact not found.");
+                    }
+                      break;
+
+                case 4:
+                System.out.print("Enter the name you'd like to delete: ");
+                    String deleteName = scanner.nextLine();
+                      if (phoneBook.remove(deleteName) != null) {
+                        System.out.println("Contact removed successfully!");
+                    } else {
+                        System.out.println("Contact not found.");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Exiting PhoneBook App. Goodbye!");
+                    scanner.close();
+                    return;
+                default:
+      System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
